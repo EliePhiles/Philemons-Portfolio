@@ -6,6 +6,8 @@
   <title>Philemon Anderson | Portfolio</title>
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r148/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.148.0/examples/js/loaders/GLTFLoader.js"></script>
 </head>
 <body>
 
@@ -17,6 +19,7 @@
         <ul>
           <li><a href="#skills">Skills</a></li>
           <li><a href="#projects">Projects</a></li>
+          <li><a href="#degrees">Degrees</a></li>
           <li><a href="#contact">Contact</a></li>
           <li><button id="theme-toggle">🌙</button></li>
         </ul>
@@ -26,11 +29,28 @@
 
   <!-- Hero -->
   <section class="hero">
-    <div class="container">
+  <div class="container hero-content">
+    <div class="hero-text">
       <h2>Hi, I'm <span>Philemon Anderson</span></h2>
       <p>Project Manager with expertise in Python, Web Design, Excel, SQL, Machine Learning, and AI Prompting.</p>
+      <a href="resume.pdf" download class="resume-btn">📄 Download Resume</a>
     </div>
-  </section>
+    <div class="hero-image">
+      <img src="profile.png" alt= "Philemon Anderson">
+    </div>
+  </div>
+</section>
+
+  <!-- 3D Logo Section -->
+<section class="logo-3d-section">
+  <div class="container">
+    <h3>My Brand Logo</h3>
+    <div class="logo-wrapper">
+      <img id="logo-img" src="logo.jpeg" alt="Philemon Anderson Logo">
+    </div>
+  </div>
+</section>
+
 
   <!-- Skills -->
   <section id="skills" class="skills">
@@ -47,15 +67,27 @@
     </div>
   </section>
 
-  <!-- Education -->
-  <section class="education">
+  <!-- Degrees -->
+  <section id="degrees" class="degrees">
     <div class="container">
       <h3>Education</h3>
-      <ul>
-        <li>MBA in Project Management – Trine University</li>
-        <li>[Your Bachelor’s Degree]</li>
-        <li>[Your Certifications]</li>
-      </ul>
+      <div class="grid">
+        <div class="degree-card">
+          <img src="knust.jpg" alt="KNUST">
+          <h4>Bachelor's in Business Information Technology</h4>
+          <p>Kwame Nkrumah University of Science and Technology</p>
+        </div>
+        <div class="degree-card">
+          <img src="asu.jpg" alt="ASU">
+          <h4>MS in Business Analytics</h4>
+          <p>Arizona State University</p>
+        </div>
+        <div class="degree-card">
+          <img src="trine.jpg" alt="Trine University">
+          <h4>MBA in Project Management</h4>
+          <p>Trine University</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -76,6 +108,18 @@
           <h4>Excel Automation Tools</h4>
           <p>Advanced VBA automation for reporting.</p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Social Media -->
+  <section class="social-media">
+    <div class="container">
+      <h3>Connect with Me</h3>
+      <div class="social-icons">
+        <a href="https://www.snapchat.com/add/YourSC" target="_blank">Snapchat</a>
+        <a href="https://linkedin.com/in/your-linkedin" target="_blank">LinkedIn</a>
+        <a href="https://github.com/your-github" target="_blank">GitHub</a>
       </div>
     </div>
   </section>
@@ -105,6 +149,27 @@
     const toggle = document.getElementById('theme-toggle');
     toggle.addEventListener('click', () => {
       document.body.classList.toggle('dark');
+    });
+
+    // Load 3D Logo
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, document.getElementById('logo-3d').clientWidth / document.getElementById('logo-3d').clientHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(document.getElementById('logo-3d').clientWidth, document.getElementById('logo-3d').clientHeight);
+    document.getElementById('logo-3d').appendChild(renderer.domElement);
+
+    const loader = new THREE.GLTFLoader();
+    loader.load('logo.glb', function(gltf) {
+      const model = gltf.scene;
+      scene.add(model);
+      camera.position.z = 3;
+
+      function animate() {
+        requestAnimationFrame(animate);
+        model.rotation.y += 0.01;
+        renderer.render(scene, camera);
+      }
+      animate();
     });
   </script>
 </body>
